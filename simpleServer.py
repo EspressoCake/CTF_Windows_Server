@@ -9,19 +9,14 @@ import sys
 def main():
 	programName = sys.argv[0]
 	currentDir = os.path.join(os.getcwd(), programName)
-	PORT = int(sys.argv[1])
 
 	if len(sys.argv) > 2 or len(sys.argv) < 2:
 		print "EXAMPLE: {} PORT".format(programName)
 		sys.exit()
 	else:
-		currentDir = os.path.join(os.getcwd(), programName)
-		programName = sys.argv[0]
-		
+		PORT = int(sys.argv[1])
 		os.system('netsh firewall add allowedprogram program="{}" name="{}" mode=enable scope=all'.format(currentDir, programName))
-		
-		print "Success! Spinning Up HTTP Server On Port {}".format(PORT)
-		
+	
 		try:
 			Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
 			httpd = SocketServer.TCPServer(("", PORT), Handler)
